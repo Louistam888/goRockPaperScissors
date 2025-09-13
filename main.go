@@ -1,11 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
+	"slices"
 )
 
-func main() {
+func rockPaperScissors() error {
 	const rounds = 3
 
 	fmt.Println("Let's play. You have", rounds, "rounds")
@@ -30,6 +32,10 @@ func main() {
 		fmt.Print("Enter your choice - rock paper or scissors")
 		fmt.Scanln(&playerChoice)
 
+		if !slices.Contains([]string{"rock", "paper", "scissors"}, playerChoice) {
+			return errors.New("Invalid input")
+		}
+
 		//game logic
 		fmt.Printf("Computer chose: %s\n", computerChoice)
 		switch {
@@ -43,4 +49,12 @@ func main() {
 	}
 
 	fmt.Println("Game over")
+	return nil
+}
+
+func main() {
+	err := rockPaperScissors()
+	if err != nil {
+		fmt.Println("errror:", err)
+	}
 }
